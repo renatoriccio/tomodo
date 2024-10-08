@@ -37,6 +37,6 @@ ARG MMS_SSL_PORT=9443
 ARG TARGETARCH
 RUN /root/scripts/dl-om.sh --version "$VERSION"
 
-CMD MMS_PORT=$MMS_PORT MMS_SSL_PORT=$MMS_SSL_PORT /root/scripts/config-om.sh --appdb "$APPDB_HOST" \
-    && /root/mongodb-mms/bin/start-mongodb-mms --enc-key-path /etc/mongodb-mms/gen.key \
-    && tail -n 1000 -F /root/mongodb-mms/etc/mongodb-mms/data/logs/mms0-startup.log /root/mongodb-mms/etc/mongodb-mms/data/logs/mms0.log
+CMD ["MMS_PORT=$MMS_PORT", "MMS_SSL_PORT=$MMS_SSL_PORT", "/root/scripts/config-om.sh", "--appdb", "$APPDB_HOST", \
+    "&&" ,"/root/mongodb-mms/bin/start-mongodb-mms", "--enc-key-path", "/etc/mongodb-mms/gen.key", \
+    "&&", "tail", "-n", "1000", "-F", "/root/mongodb-mms/etc/mongodb-mms/data/logs/mms0-startup.log", "/root/mongodb-mms/etc/mongodb-mms/data/logs/mms0.log"]
